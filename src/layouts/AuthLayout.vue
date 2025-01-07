@@ -1,0 +1,92 @@
+<script>
+export default {
+  data() {
+    return {
+      selectedImage: "banner1.png",
+      images: ["banner1.png", "banner2.png"],
+      intervalId: null,
+    };
+  },
+  mounted() {
+    this.startImageSlider();
+  },
+  beforeUnmount() {
+    this.stopImageSlider();
+  },
+  methods: {
+    startImageSlider() {
+      this.intervalId = setInterval(() => {
+        const currentIndex = this.images.indexOf(this.selectedImage);
+        const nextIndex = (currentIndex + 1) % this.images.length;
+        this.selectedImage = this.images[nextIndex];
+      }, 5000);
+    },
+    stopImageSlider() {
+      clearInterval(this.intervalId);
+    },
+  },
+};
+</script>
+<template>
+  <div class="flex w-screen h-screen">
+    <!-- Left Section -->
+    <div class="w-2/5 relative">
+      <img
+        :src="`/public/images/${selectedImage}`"
+        class="w-full h-full object-cover"
+        alt="banner image"
+      />
+      <div class="absolute inset-0 z-20">
+        <div
+          class="flex flex-col justify-end items-center h-full w-full pb-20 text-white"
+        >
+          <div class="text-xl font-semibold">No Hazzles</div>
+          <div class="w-2/3 text-center my-4 text-xl font-light">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod.
+          </div>
+          <div class="flex flex-row items-center justify-center space-x-2">
+            <div
+              v-for="image in images"
+              :class="
+                selectedImage === image
+                  ? 'border-gray-400'
+                  : 'border-transparent'
+              "
+              :key="image"
+              class="size-5 flex items-center justify-center border rounded-full"
+            >
+              <button
+                :class="
+                  selectedImage === image ? 'bg-green-500' : 'bg-gray-200'
+                "
+                @click="selectedImage = image"
+                class="size-2.5 rounded-full border"
+              ></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="w-3/5 flex flex-col h-full py-6 px-8">
+      <!-- Dynamic Pages -->
+      <div class="flex-1 py-12 px-16">
+        <slot />
+      </div>
+
+      <!-- Copyright (c) and Terms and Privacy Policy -->
+      <div
+        class="flex items-center justify-between text-gray-600 text-sm font-light"
+      >
+        <div>
+          By siging up, you agree to our
+          <a href="#" class="text-green-500 font-semibold">Terms</a> and
+          <a href="#" class="text-green-500 font-semibold">Privacy Policy</a>
+        </div>
+        <div>© 2019 Tinylabs. All rights reserved.</div>
+      </div>
+    </div>
+  </div>
+</template>
