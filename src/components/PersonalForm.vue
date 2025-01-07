@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     nextStep() {
-      if (this.currentStep <= 3) {
+      if (this.currentStep < 3) {
         this.currentStep++;
       }
     },
