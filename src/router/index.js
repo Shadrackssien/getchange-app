@@ -6,13 +6,13 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: "/home",
       name: "HomePage",
       component: HomePage,
       meta: { layout: "DashboardLayout" },
     },
     {
-      path: "/auth",
+      path: "/",
       name: "auth",
       component: AuthPage,
       meta: { layout: "AuthLayout" },

@@ -49,7 +49,7 @@ export default {
       </div>
 
       <!-- MainPage -->
-      <div class="w-full flex flex-col bg-slate-50 h-full p-16">
+      <div class="w-full flex flex-col bg-slate-50 h-full px-16 py-12">
         <div class="flex-1">
           <slot />
         </div>
