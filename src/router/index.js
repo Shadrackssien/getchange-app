@@ -9,11 +9,13 @@ const router = createRouter({
       path: "/",
       name: "HomePage",
       component: HomePage,
+      meta: { layout: "DashboardLayout" },
     },
     {
       path: "/auth",
       name: "auth",
       component: AuthPage,
+      meta: { layout: "AuthLayout" },
     },
   ],
 });
