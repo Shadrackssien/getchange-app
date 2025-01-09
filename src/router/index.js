@@ -2,15 +2,17 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import AuthPage from "../pages/AuthPage.vue";
 import LoginPage from "../pages/LoginPage.vue";
+import EmployeesPage from "../pages/EmployeesPage.vue";
+import cardsPage from "../pages/CardsPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/dashboard",
-      name: "HomePage",
-      component: HomePage,
-      meta: { layout: "DashboardLayout" },
+      path: "/",
+      name: "login",
+      component: LoginPage,
+      meta: { layout: "AuthLayout" },
     },
     {
       path: "/register",
@@ -19,10 +21,22 @@ const router = createRouter({
       meta: { layout: "AuthLayout" },
     },
     {
-      path: "/",
-      name: "login",
-      component: LoginPage,
-      meta: { layout: "AuthLayout" },
+      path: "/dashboard",
+      name: "HomePage",
+      component: HomePage,
+      meta: { layout: "DashboardLayout" },
+    },
+    {
+      path: "/dashboard/employees",
+      name: "EmployeesPage",
+      component: EmployeesPage,
+      meta: { layout: "DashboardLayout" },
+    },
+    {
+      path: "/dashboard/cards",
+      name: "cards",
+      component: cardsPage,
+      meta: { layout: "DashboardLayout" },
     },
   ],
 });
