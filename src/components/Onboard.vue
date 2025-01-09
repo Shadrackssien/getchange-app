@@ -24,7 +24,7 @@ export default {
     </p>
 
     <div class="pb-12 pt-4">
-      <RouterLink to="/home">
+      <RouterLink to="/dashboard">
         <button
           type="submit"
           class="flex items-center gap-2 bg-primary text-base font-semibold rounded-[4px] text-white py-2 px-12"

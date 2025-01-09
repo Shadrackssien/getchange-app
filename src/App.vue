@@ -13,7 +13,7 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const layout = computed(() => route.meta.layout || "DashboardLayout");
+    const layout = computed(() => route.meta.layout || "AuthLayout");
 
     return {
       layout,

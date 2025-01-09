@@ -3,7 +3,7 @@ import menu from "../assets/icons/menu.png";
 import users from "../assets/icons/users.png";
 import cards from "../assets/icons/cards.png";
 import Delete from "../assets/icons/delete.png";
-import logout from "../assets/icons/sign-out.png";
+import logoutIcon from "../assets/icons/sign-out.png";
 
 import GetchangeWidget from "../components/GetchangeWidget.vue";
 import Navbar from "../components/Navbar.vue";
@@ -19,8 +19,23 @@ export default {
       users,
       cards,
       Delete,
-      logout,
+      logoutIcon,
+      user: null,
     };
+  },
+  created() {
+    const userData = localStorage.getItem("userData");
+    if (userData) {
+      this.user = JSON.parse(userData);
+    } else {
+      this.$router.push("/");
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("userData");
+      this.$router.push("/");
+    },
   },
 };
 </script>
@@ -40,10 +55,10 @@ export default {
           <img class="w-6 h-5" :src="users" alt="menu icon" />
           <img class="w-6 h-5" :src="cards" alt="menu icon" />
         </div>
-        <button class="border-t-2 border-t-[#6A7E8A1A]">
+        <button @click="logout" class="border-t-2 border-t-[#6A7E8A1A]">
           <div class="flex flex-col items-center space-x-2">
             <p class="text-center">Logout</p>
-            <img class="w-6 h-6" :src="logout" alt="logout icon" />
+            <img class="w-6 h-6" :src="logoutIcon" alt="logout icon" />
           </div>
         </button>
       </div>

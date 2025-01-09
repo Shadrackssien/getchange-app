@@ -6,10 +6,13 @@ import userIcon from "../assets/icons/user.png";
 import atIcon from "../assets/icons/at.png";
 import eyeIcon from "../assets/icons/eye.png";
 
+import { RouterLink } from "vue-router";
+
 export default {
   components: {
     BusinessForm,
     Onboard,
+    RouterLink,
   },
   data() {
     return {
@@ -40,7 +43,9 @@ export default {
     </p>
     <p class="text-[#013C61]">
       Already registered?
-      <span class="text-green-500 font-medium"> Sign in</span>
+      <router-link to="/">
+        <span class="text-green-500 font-medium"> Sign in</span>
+      </router-link>
     </p>
   </div>
   <div class="mt-12 px-10 py-6 shadow-xl shadow-[#EAEEE9]">

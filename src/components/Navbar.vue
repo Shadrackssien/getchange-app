@@ -6,7 +6,14 @@ export default {
     return {
       getchange,
       arrowdown,
+      user: null,
     };
+  },
+  created() {
+    const userData = localStorage.getItem("userData");
+    if (userData) {
+      this.user = JSON.parse(userData);
+    }
   },
 };
 </script>
@@ -20,7 +27,7 @@ export default {
     <div class="flex items-center space-x-2 px-6">
       <div class="size-7 bg-[#6A7E8A] rounded-full"></div>
       <div class="flex items-center space-x-2">
-        <p>Hi, Joshua</p>
+        <p>Hi, {{ user.username }}</p>
         <img :src="arrowdown" alt="arrow icon" />
       </div>
     </div>
