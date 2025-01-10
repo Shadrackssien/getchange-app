@@ -47,7 +47,7 @@ export default {
       <p class="text-[#013C61] font-semibold text-3xl leading-10">Welcome</p>
       <p class="text-[#013C61]">
         Don't have an account?
-        <router-link to="/register">
+        <router-link to="/auth/register">
           <span class="text-green-500 font-medium"> Sign up</span>
         </router-link>
       </p>

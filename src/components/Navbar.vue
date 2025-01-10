@@ -15,10 +15,14 @@ export default {
         {
           src: timeIcon,
           label: "Wallet History",
-          route: "/dashboard",
+          route: "/dashboard/wallet-history",
         },
-        { src: settings, label: "Settings", route: "/dashboard" },
-        { src: logoutIcon, label: "Logout", route: "/dashboard" },
+        {
+          src: settings,
+          label: "Settings",
+          route: "/dashboard/settings/profile",
+        },
+        { src: logoutIcon, label: "Logout", route: "/" },
       ],
     };
   },
@@ -31,6 +35,10 @@ export default {
   methods: {
     toggleDropdown() {
       this.isDropdownVisible = !this.isDropdownVisible;
+    },
+    logout() {
+      localStorage.removeItem("userData");
+      this.$router.push("/");
     },
   },
 };
@@ -65,7 +73,16 @@ export default {
         :key="dropdown.label"
         class="space-y-2.5"
       >
-        <router-link :to="dropdown.route">
+        <li
+          v-if="dropdown.label === 'Logout'"
+          @click="logout"
+          class="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 cursor-pointer"
+        >
+          <img :src="dropdown.src" alt="logout icon" />
+          <p>{{ dropdown.label }}</p>
+        </li>
+
+        <router-link v-else :to="dropdown.route">
           <li
             class="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 cursor-pointer"
           >

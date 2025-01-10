@@ -3,6 +3,7 @@ import menu from "../assets/icons/menu.svg";
 import users from "../assets/icons/users.svg";
 import cards from "../assets/icons/cards.svg";
 import logoutIcon from "../assets/icons/sign-out.png";
+
 import getchange from "../assets/icons/getchange.png";
 import arrowdown from "../assets/icons/arrow-down.png";
 import logoutIcon2 from "../assets/icons/log-out.png";
@@ -24,6 +25,33 @@ export default {
         { name: "users", src: users, route: "/dashboard/employees" },
         { name: "cards", src: cards, route: "/dashboard/cards" },
       ],
+      items: [
+        {
+          id: 1,
+          title: "Profile",
+          route: "/dashboard/settings/profile",
+        },
+        {
+          id: 2,
+          title: "Password",
+          route: "/dashboard/settings/password",
+        },
+        {
+          id: 3,
+          title: "Store Information",
+          route: "/dashboard/settings/store-information",
+        },
+        {
+          id: 4,
+          title: "Billing Information",
+          route: "/dashboard/settings/billing-information",
+        },
+        {
+          id: 5,
+          title: "Invoice History",
+          route: "/dashboard/settings/invoice-history",
+        },
+      ],
       dropdowns: [
         {
           src: timeIcon,
@@ -39,11 +67,11 @@ export default {
       ],
       logoutIcon,
       user: null,
-      showGetchangeWidget: true,
-      showMainPage: true,
       getchange,
       arrowdown,
       isDropdownVisible: false,
+      showGetchangeWidget: true,
+      showMainPage: true,
     };
   },
   created() {
@@ -55,10 +83,6 @@ export default {
     }
   },
   methods: {
-    toggleDropdown() {
-      this.isDropdownVisible = !this.isDropdownVisible;
-    },
-
     logout() {
       localStorage.removeItem("userData");
       this.$router.push("/");
@@ -77,6 +101,10 @@ export default {
       } else {
         this.showMainPage = true;
       }
+    },
+
+    toggleDropdown() {
+      this.isDropdownVisible = !this.isDropdownVisible;
     },
   },
   computed: {
@@ -189,22 +217,43 @@ export default {
       </div>
 
       <!-- MainPage -->
-      <div
-        v-if="showMainPage"
-        class="w-full flex flex-col bg-slate-50 h-full px-16 py-12"
-      >
+      <div class="w-full flex flex-col bg-slate-50 h-full px-16 py-12">
         <div class="flex-1">
-          <slot />
-        </div>
-      </div>
+          <div class="mx-48 h-full bg-white">
+            <div v-if="showMainPage" class="py-8 px-20">
+              <ul
+                class="flex text-[#013C61] gap-16 border-b-2 border-b-[#013C611A]"
+              >
+                <li v-for="item in items" :key="item.id">
+                  <router-link :to="item.route">
+                    <div
+                      :class="{
+                        'font-bold': activeRoute === item.route,
+                        'font-normal hover:text-[#6A7E8A] hover:scale-110 transition-all duration-300 ease-in-out':
+                          activeRoute !== item.route,
+                      }"
+                      class="flex flex-col cursor-pointer items-center"
+                    >
+                      <p>{{ item.title }}</p>
+                      <p
+                        :class="{
+                          'border-b-4 border-b-[#2BDA53] w-8 mx-2':
+                            activeRoute === item.route,
+                        }"
+                        class=""
+                      ></p>
+                    </div>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
 
-      <!-- Right sidebar -->
-      <div
-        v-if="showGetchangeWidget"
-        class="w-[395px] shadow-lg shadow-[#EAEEE9]"
-      >
-        <!-- getchange widget -->
-        <GetchangeWidget />
+            <!-- Profile Pages -->
+            <div>
+              <slot />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
