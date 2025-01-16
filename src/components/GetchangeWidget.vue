@@ -5,7 +5,20 @@ export default {
   data() {
     return {
       Delete,
+      amount: "",
+      calculator: "",
+      options: ["Airtime", "IOU Voucher"],
+      selectedOption: "Airtime",
+      keys: ["C", "<", ">", "DEL", 1, 2, 3, "*", 4, 5, 6, "#", 7, 8, 9, 0],
     };
+  },
+  watch: {
+    amount(value) {
+      this.amount = value.replace(/[^0-9]/g, "");
+    },
+    calculator(value) {
+      this.calculator = value.replace(/[^0-9]/g, "");
+    },
   },
 };
 </script>
@@ -19,26 +32,33 @@ export default {
         <input
           class="w-full text-white outline-none bg-transparent border-b border-b-[#FFFFFF6A]"
           type="text"
-          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          v-model="amount"
         />
+
         <div class="flex justify-between my-4">
-          <div class="flex items-center space-x-2">
+          <div
+            v-for="option in options"
+            :key="option"
+            class="flex items-center space-x-2"
+          >
             <div
-              class="flex items-center justify-center size-3 border rounded-full"
+              @click="selectedOption = option"
+              :class="[
+                'flex items-center justify-center size-3 border rounded-full',
+                { 'bg-[#2BDA53]': selectedOption === option },
+              ]"
             >
               <p
-                class="flex items-center justify-center size-1.5 bg-[#2BDA53] rounded-full"
+                :class="[
+                  'size-1.5 rounded-full',
+                  {
+                    'bg-[#2BDA53]': selectedOption === option,
+                    'bg-transparent': selectedOption !== option,
+                  },
+                ]"
               ></p>
             </div>
-            <p>Airtime</p>
-          </div>
-          <div class="flex items-center space-x-2">
-            <div
-              class="flex items-center justify-center size-3 border rounded-full"
-            >
-              <p class="size-1.5 bg-transparent rounded-full"></p>
-            </div>
-            <p>IOU Voucher</p>
+            <p>{{ option }}</p>
           </div>
         </div>
       </div>
@@ -48,7 +68,7 @@ export default {
       <input
         class="w-full text-white text-3xl outline-none bg-transparent"
         type="text"
-        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        v-model="calculator"
       />
     </div>
   </div>

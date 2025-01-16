@@ -1,49 +1,41 @@
 <script>
-import menu from "../assets/icons/menu.svg";
-import users from "../assets/icons/users.svg";
-import cards from "../assets/icons/cards.svg";
+// import menu from "../assets/icons/menu.svg";
+// import users from "../assets/icons/users.svg";
+// import cards from "../assets/icons/cards.svg";
 import logoutIcon from "../assets/icons/sign-out.png";
-import getchange from "../assets/icons/getchange.png";
-import arrowdown from "../assets/icons/arrow-down.png";
-import logoutIcon2 from "../assets/icons/log-out.png";
-import settings from "../assets/icons/settings.png";
-import timeIcon from "../assets/icons/time.png";
 
 import GetchangeWidget from "../components/GetchangeWidget.vue";
+import { HomeIcon, ContactIcon, CardIcon } from "../components/icons/index.js";
 import Navbar from "../components/Navbar.vue";
 
 export default {
   components: {
     GetchangeWidget,
     Navbar,
+    HomeIcon,
+    ContactIcon,
+    CardIcon,
   },
   data() {
     return {
+      // icons: [
+      //   { name: "menu", src: menu, route: "/dashboard" },
+      //   { name: "users", src: users, route: "/dashboard/employees" },
+      //   { name: "cards", src: cards, route: "/dashboard/cards" },
+      // ],
       icons: [
-        { name: "menu", src: menu, route: "/dashboard" },
-        { name: "users", src: users, route: "/dashboard/employees" },
-        { name: "cards", src: cards, route: "/dashboard/cards" },
-      ],
-      dropdowns: [
+        { name: "home", component: HomeIcon, route: "/dashboard" },
         {
-          src: timeIcon,
-          label: "Wallet History",
-          route: "/dashboard/wallet-history",
+          name: "employees",
+          component: ContactIcon,
+          route: "/dashboard/employees",
         },
-        {
-          src: settings,
-          label: "Settings",
-          route: "/dashboard/settings/profile",
-        },
-        { src: logoutIcon2, label: "Logout", route: "/" },
+        { name: "cards", component: CardIcon, route: "/dashboard/cards" },
       ],
+
       logoutIcon,
       user: null,
       showGetchangeWidget: true,
-      showMainPage: true,
-      getchange,
-      arrowdown,
-      isDropdownVisible: false,
     };
   },
   created() {
@@ -55,8 +47,8 @@ export default {
     }
   },
   methods: {
-    toggleDropdown() {
-      this.isDropdownVisible = !this.isDropdownVisible;
+    goToRoute(route) {
+      this.$router.push(route);
     },
 
     logout() {
@@ -71,13 +63,6 @@ export default {
         this.showGetchangeWidget = true;
       }
     },
-    updateMainPageVisibility(route) {
-      if (route === "/dashboard/wallet-history") {
-        this.showMainPage = false;
-      } else {
-        this.showMainPage = true;
-      }
-    },
   },
   computed: {
     activeRoute() {
@@ -87,7 +72,6 @@ export default {
   watch: {
     "$route.path"(newRoute) {
       this.updateWidgetVisibility(newRoute);
-      this.updateMainPageVisibility(newRoute);
     },
   },
 };
@@ -96,57 +80,7 @@ export default {
 <template>
   <div>
     <!-- Navbar -->
-    <div>
-      <div
-        class="flex justify-between w-full text-[#013C61] h-max bg-white border-b-2 border-b-[#6A7E8A1A] p-2"
-      >
-        <div
-          class="hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer"
-        >
-          <img :src="getchange" alt="logo" />
-        </div>
-        <div
-          @click="toggleDropdown"
-          class="cursor-pointer flex items-center space-x-2 px-10"
-        >
-          <div class="size-7 bg-[#6A7E8A] rounded-full"></div>
-          <div class="flex items-center space-x-2">
-            <p>Hi, {{ user.username }}</p>
-            <img :src="arrowdown" alt="arrow icon" />
-          </div>
-        </div>
-
-        <!-- Dropdown menu -->
-        <div
-          v-if="isDropdownVisible"
-          class="absolute bg-white shadow-lg w-44 right-6 top-[60px] py-6 border border-gray-200"
-        >
-          <ul
-            v-for="dropdown in dropdowns"
-            :key="dropdown.label"
-            class="space-y-2.5"
-          >
-            <li
-              v-if="dropdown.label === 'Logout'"
-              @click="logout"
-              class="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 cursor-pointer"
-            >
-              <img :src="dropdown.src" alt="logout icon" />
-              <p>{{ dropdown.label }}</p>
-            </li>
-
-            <router-link v-else :to="dropdown.route">
-              <li
-                class="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 cursor-pointer"
-              >
-                <img :src="dropdown.src" alt="time icon" />
-                <p>{{ dropdown.label }}</p>
-              </li>
-            </router-link>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <Navbar />
 
     <div class="flex justify-between w-full h-[91vh]">
       <!-- Left sidebar -->
@@ -154,7 +88,7 @@ export default {
         class="flex flex-col justify-between w-[82px] border-r-2 border-r-[#6A7E8A1A] pt-20 pb-8"
       >
         <div class="flex flex-col space-y-12">
-          <div
+          <!-- <div
             v-for="icon in icons"
             :key="icon.name"
             :class="{
@@ -175,6 +109,24 @@ export default {
                 :alt="`${icon.name} icon`"
               />
             </router-link>
+          </div> -->
+
+          <div
+            v-for="icon in icons"
+            :key="icon.name"
+            :class="{
+              ' border-l-[#2BDA53]': activeRoute === icon.route,
+              ' border-l-transparent': activeRoute !== icon.route,
+            }"
+            class="h-12 flex items-center px-4 border-l-[5px]"
+          >
+            <button
+              @click="goToRoute(icon.route)"
+              :class="{ 'text-[#2BDA53]': activeRoute === icon.route }"
+              class="w-5 h-5"
+            >
+              <component :is="icon.component" />
+            </button>
           </div>
         </div>
         <button
@@ -189,11 +141,8 @@ export default {
       </div>
 
       <!-- MainPage -->
-      <div
-        v-if="showMainPage"
-        class="w-full flex flex-col bg-slate-50 h-full px-16 py-12"
-      >
-        <div class="flex-1">
+      <div class="w-full flex flex-col bg-slate-50 h-full px-16 py-12">
+        <div class="flex-1 w-full h-full">
           <slot />
         </div>
       </div>

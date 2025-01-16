@@ -35,13 +35,13 @@ const router = createRouter({
     },
     {
       path: "/dashboard",
-      name: "HomePage",
+      name: "home",
       component: HomePage,
       meta: { layout: "DashboardLayout" },
     },
     {
       path: "/dashboard/employees",
-      name: "EmployeesPage",
+      name: "employees",
       component: EmployeesPage,
       meta: { layout: "DashboardLayout" },
     },
