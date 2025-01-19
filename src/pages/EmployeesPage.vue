@@ -181,10 +181,10 @@ export default {
 };
 </script>
 <template>
-  <div class="bg-red-50 w-full rounded-xl p-10">
+  <div class="bg-green-50 w-full rounded-xl p-10">
     <div class="space-y-4">
       <div class="flex justify-between">
-        <p class="px-4 text-[#013C61] text-2xl font-bold">Products</p>
+        <p class="px-4 text-[#070a0c] text-2xl font-bold">Products</p>
         <div class="flex items-center justify-center gap-2">
           <div
             v-if="selectedProducts.length"
@@ -206,7 +206,7 @@ export default {
               (p) => p.id === product.id
             ),
           }"
-          class="cursor-pointer border border-[#6A7E8A1A] w-full overflow-auto text-[#6A7E8A] grid grid-cols-6 py-2 bg-white"
+          class="cursor-pointer border text-[#070a0c] border-[#6A7E8A1A] w-full overflow-auto grid grid-cols-6 py-2 bg-white"
         >
           <p>{{ product.id }}</p>
           <p>{{ product.name }}</p>

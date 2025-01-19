@@ -18,11 +18,6 @@ export default {
   },
   data() {
     return {
-      // icons: [
-      //   { name: "menu", src: menu, route: "/dashboard" },
-      //   { name: "users", src: users, route: "/dashboard/employees" },
-      //   { name: "cards", src: cards, route: "/dashboard/cards" },
-      // ],
       icons: [
         { name: "home", component: HomeIcon, route: "/dashboard" },
         {
@@ -78,39 +73,18 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="">
     <!-- Navbar -->
-    <Navbar />
+    <div class="fixed z-50 top-0 w-full">
+      <Navbar />
+    </div>
 
-    <div class="flex justify-between w-full h-[91vh]">
+    <div class="flex justify-between w-full h-full">
       <!-- Left sidebar -->
       <div
-        class="flex flex-col justify-between w-[82px] border-r-2 border-r-[#6A7E8A1A] pt-20 pb-8"
+        class="flex bg-white fixed flex-col justify-between w-[82px] h-full border-r-2 border-r-[#6A7E8A1A] pt-20 pb-4"
       >
         <div class="flex flex-col space-y-12">
-          <!-- <div
-            v-for="icon in icons"
-            :key="icon.name"
-            :class="{
-              'border-l-4 border-l-[#2BDA53]': activeRoute === icon.route,
-              'border-l-4 border-l-transparent': activeRoute !== icon.route,
-            }"
-            class="h-12 flex items-center px-4"
-          >
-            <router-link :to="icon.route">
-              <img
-                :class="{
-                  'bg-green-100': activeRoute === icon.route,
-                  'hover:bg-gray-100 hover:scale-110 transition-all duration-300 ease-in-out':
-                    activeRoute !== icon.route,
-                }"
-                class="w-6 h-5"
-                :src="icon.src"
-                :alt="`${icon.name} icon`"
-              />
-            </router-link>
-          </div> -->
-
           <div
             v-for="icon in icons"
             :key="icon.name"
@@ -141,16 +115,16 @@ export default {
       </div>
 
       <!-- MainPage -->
-      <div class="w-full flex flex-col bg-slate-50 h-full px-16 py-12">
-        <div class="flex-1 w-full h-full">
-          <slot />
-        </div>
+      <div
+        class="w-full flex flex-col items-center justify-center h-full px-12 mt-16 ml-12"
+      >
+        <slot />
       </div>
 
       <!-- Right sidebar -->
       <div
-        v-if="showGetchangeWidget"
-        class="w-[395px] shadow-lg shadow-[#EAEEE9]"
+        v-if="$route.path === '/dashboard'"
+        class="fixed right-0 h-full shadow-lg mt-16 shadow-[#EAEEE9]"
       >
         <!-- getchange widget -->
         <GetchangeWidget />

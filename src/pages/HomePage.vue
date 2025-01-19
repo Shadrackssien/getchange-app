@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative ml-8 mr-96 mt-12">
     <!-- Modal -->
     <div
       v-if="showModal"
@@ -54,7 +54,7 @@ export default {
       class="space-y-6"
     >
       <div
-        class="flex items-center bg-white p-4 text-[#013C61] justify-between"
+        class="flex items-center bg-slate-50 p-4 text-[#013C61] justify-between"
       >
         <p class="font-semibold">Store Wallet</p>
         <div class="flex space-x-1">
@@ -70,7 +70,7 @@ export default {
       </div>
 
       <div
-        class="flex items-center bg-white p-4 text-[#013C61] justify-between"
+        class="flex items-center bg-slate-50 p-4 text-[#013C61] justify-between"
       >
         <p class="font-semibold">Total Disbursed</p>
         <div class="flex space-x-1 pr-6">
@@ -104,7 +104,7 @@ export default {
             <p>STAFF</p>
             <p>AMOUNT</p>
           </div>
-          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-white">
+          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-slate-50">
             <p>1</p>
             <p>Wallet top up</p>
             <p>06 Aug 2019</p>
@@ -112,7 +112,7 @@ export default {
             <p>Admin</p>
             <p>NGN2000.00</p>
           </div>
-          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-white">
+          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-slate-50">
             <p>1</p>
             <p>Wallet top up</p>
             <p>06 Aug 2019</p>
@@ -120,7 +120,7 @@ export default {
             <p>Admin</p>
             <p>NGN2000.00</p>
           </div>
-          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-white">
+          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-slate-50">
             <p>1</p>
             <p>Wallet top up</p>
             <p>06 Aug 2019</p>
@@ -128,7 +128,7 @@ export default {
             <p>Admin</p>
             <p>NGN2000.00</p>
           </div>
-          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-white">
+          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-slate-50">
             <p>1</p>
             <p>Wallet top up</p>
             <p>06 Aug 2019</p>
@@ -136,7 +136,7 @@ export default {
             <p>Admin</p>
             <p>NGN2000.00</p>
           </div>
-          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-white">
+          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-slate-50">
             <p>1</p>
             <p>Wallet top up</p>
             <p>06 Aug 2019</p>
@@ -144,7 +144,7 @@ export default {
             <p>Admin</p>
             <p>NGN2000.00</p>
           </div>
-          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-white">
+          <div class="w-full text-[#6A7E8A] grid grid-cols-6 py-2 bg-slate-50">
             <p>1</p>
             <p>Wallet top up</p>
             <p>06 Aug 2019</p>
