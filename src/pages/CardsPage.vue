@@ -26,6 +26,7 @@ export default {
         id: i + 1,
         name: `Product ${i + 1}`,
       })),
+      selectedProducts: [],
     };
   },
   computed: {
@@ -41,6 +42,15 @@ export default {
   methods: {
     toggleView(view) {
       this.isListView = view === "list";
+    },
+    addToCart(product) {
+      if (this.selectedProducts.includes(product)) {
+        this.selectedProducts = this.selectedProducts.filter(
+          (p) => p !== product
+        );
+      } else {
+        this.selectedProducts.push(product);
+      }
     },
     goToNextPage() {
       if (this.currentPage < this.totalPages) this.currentPage++;
@@ -96,7 +106,12 @@ export default {
           <button class="w-10 h-10 mt-2 text-green-800">
             <cart-empty-icon />
           </button>
-          <p class="absolute inset-0 text-sm font-bold text-red-600 pl-5">1</p>
+          <p
+            v-if="selectedProducts.length"
+            class="absolute inset-0 text-sm font-bold text-red-600 pl-5"
+          >
+            {{ selectedProducts.length }}
+          </p>
         </div>
       </div>
     </div>
@@ -137,14 +152,24 @@ export default {
 
         <!-- Products -->
         <div class="space-y-4">
-          <ListCard v-for="product in displayedProducts" :key="product.id" />
+          <ListCard
+            v-for="product in displayedProducts"
+            :key="product.id"
+            :product="product"
+            @add-to-cart="addToCart"
+          />
         </div>
       </div>
 
       <!-- Grid View -->
       <div v-else class="space-y-4 mt-4">
         <div class="grid grid-cols-5 gap-4">
-          <GridCard v-for="product in displayedProducts" :key="product.id" />
+          <GridCard
+            v-for="product in displayedProducts"
+            :key="product.id"
+            :product="product"
+            @add-to-cart="addToCart"
+          />
         </div>
       </div>
       <!-- Next and previous -->

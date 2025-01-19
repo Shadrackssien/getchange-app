@@ -1,3 +1,11 @@
+<script>
+export default {
+  props: {
+    product: Object,
+  },
+};
+</script>
+
 <template>
   <div class="space-y-4">
     <!-- Product -->
@@ -41,7 +49,10 @@
         <p class="mt-4">$ 100.00</p>
         <!-- Add to Cart -->
         <div class="flex flex-col gap-2 justify-center mx-4">
-          <button class="bg-[#2BDA53] w-full py-2 text-white rounded-lg">
+          <button
+            @click="$emit('addToCart', product)"
+            class="bg-[#2BDA53] w-full py-2 text-white rounded-lg"
+          >
             Add to Cart
           </button>
           <button
