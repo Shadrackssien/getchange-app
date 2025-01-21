@@ -1,6 +1,8 @@
 <script>
 import GridCard from "../components/cards/GridCard.vue";
 import ListCard from "../components/cards/ListCard.vue";
+import axios from "axios";
+
 import {
   ListIcon,
   GridIcon,
@@ -22,10 +24,7 @@ export default {
       isListView: true,
       currentPage: 1,
       itemsPerPage: 5,
-      products: Array.from({ length: 50 }, (_, i) => ({
-        id: i + 1,
-        name: `Product ${i + 1}`,
-      })),
+      products: [],
       selectedProducts: [],
     };
   },
@@ -58,6 +57,22 @@ export default {
     goToPreviousPage() {
       if (this.currentPage > 1) this.currentPage--;
     },
+  },
+  async mounted() {
+    try {
+      const res = await axios.get("https://fakestoreapi.com/products");
+      this.products = await res.data.map((product) => ({
+        imageSrc: product.image,
+        title: product.title,
+        price: product.price,
+        description: product.description,
+        category: product.category,
+        link: "product/" + product.id,
+      }));
+      console.log(this.products);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
@@ -130,6 +145,7 @@ export default {
           <option :value="5">5</option>
           <option :value="10">10</option>
           <option :value="15">15</option>
+          <option :value="20">20</option>
         </select>
       </div>
     </div>
@@ -157,6 +173,12 @@ export default {
             :key="product.id"
             :product="product"
             @add-to-cart="addToCart"
+            :imageSrc="product.imageSrc"
+            :title="product.title"
+            :price="'$ ' + product.price"
+            :description="product.description"
+            :link="product.link"
+            :category="product.category"
           />
         </div>
       </div>
@@ -169,6 +191,11 @@ export default {
             :key="product.id"
             :product="product"
             @add-to-cart="addToCart"
+            :imageSrc="product.imageSrc"
+            :title="product.title"
+            :price="'$ ' + product.price"
+            :description="product.description"
+            :link="product.link"
           />
         </div>
       </div>

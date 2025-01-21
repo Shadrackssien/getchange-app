@@ -1,7 +1,12 @@
 <script>
+import { routerKey } from "vue-router";
+
 export default {
   props: {
-    product: Object,
+    product: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>
@@ -18,35 +23,31 @@ export default {
         <div class="">
           <img
             class="w-full h-28 object-cover object-center rounded-xl"
-            src="../../assets/demo.png"
-            alt="Product 1"
+            :src="product.imageSrc"
+            :alt="product.title"
           />
         </div>
         <!-- Name -->
         <p class="font-semibold text-sm my-4 line-clamp-3 h-16">
-          Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops
+          {{ product.title }}
         </p>
         <!-- Description -->
         <p class="text-gray-600 my-4 text-sm line-clamp-3 h-16">
-          great outerwear jackets for Spring/Autumn/Winter, suitable for many
-          occasions, such as working, hiking, camping, mountain/rock climbing,
-          cycling, traveling or other outdoors. Good gift choice for you or your
-          family member. A warm hearted love to Father, husband or son in this
-          thanksgiving or Christmas Day."
+          {{ product.description }}
         </p>
         <!-- Category -->
         <div class="mt-4">
           <p
             class="border-2 shadow-2xl text-gray-600 py-1 px-2 w-max rounded-md"
           >
-            Electronics
+            {{ product.category }}
           </p>
           <div></div>
         </div>
         <!-- Reviews -->
         <div class="mt-4">4 stars</div>
         <!-- Price -->
-        <p class="mt-4">$ 100.00</p>
+        <p class="mt-4">$ {{ product.price }}</p>
         <!-- Add to Cart -->
         <div class="flex flex-col gap-2 justify-center mx-4">
           <button
@@ -55,11 +56,12 @@ export default {
           >
             Add to Cart
           </button>
-          <button
+          <router-link
+            :to="product.link"
             class="w-full py-2 border border-[#2BDA53] text-gray-600 rounded-lg"
           >
             View Details
-          </button>
+          </router-link>
         </div>
       </div>
     </div>

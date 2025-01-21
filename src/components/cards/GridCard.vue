@@ -6,7 +6,10 @@ export default {
     ArrowRightUpIcon,
   },
   props: {
-    product: Object,
+    product: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>
@@ -17,25 +20,27 @@ export default {
   >
     <img
       class="w-auto h-1/2 object-cover object-center rounded-t-lg transition-all duration-300 ease-in-out hover:scale-[1.02]"
-      src="../../assets/demo.png"
-      alt="title"
+      :src="product.imageSrc"
+      :alt="product.title"
     />
     <div
       class="mx-4 text-[16px] font-bold leading-[18.75px] mt-1 text-ellipsis line-clamp-2"
     >
-      title
+      {{ product.title }}
     </div>
-    <div class="mx-4 text-[14px] font-medium leading-[16.41px] mb-2">price</div>
+    <div class="mx-4 text-[14px] font-medium leading-[16.41px] mb-2">
+      {{ product.price }}
+    </div>
     <div
       class="mx-4 mb-3 text-[14px] font-normal leading-[16.41px] text-ellipsis line-clamp-4 overflow-hidden"
     >
-      description
+      {{ product.description }}
     </div>
     <div class="flex space-x-4">
       <div class="mx-4 flex flex-row items-center gap-1 mb-3">
         <router-link
           class="text-primary text-[14px] leading-[16.41px] font-semibold"
-          to="/"
+          :to="product.link"
           >View details
         </router-link>
         <svg
