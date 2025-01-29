@@ -1,4 +1,4 @@
-<script></script>
+<script setup></script>
 <template>
   <div class="space-y-8 w-[50%] mx-auto mt-10">
     <div class="text-secondary">Payment Method</div>
@@ -8,14 +8,14 @@
         <p>**** 1234</p>
         <div class="flex items-center gap-2">
           <p class="text-secondary">Make Primary</p>
-          <input type="radio" v-model="paymentMethod" value="mastercard" />
+          <input type="radio" value="mastercard" />
         </div>
       </div>
       <div class="text-[#013C61] grid grid-cols-3 gap-[58px]">
         <p>VISA CARD</p>
         <p>**** 4254</p>
         <div class="flex justify-end">
-          <input type="radio" v-model="paymentMethod" value="mastercard" />
+          <input type="radio" value="mastercard" />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import menu from "../assets/icons/menu.svg";
 import users from "../assets/icons/users.svg";
 import cards from "../assets/icons/cards.svg";
@@ -119,6 +119,112 @@ export default {
     },
   },
 };
+</script> -->
+
+<script setup>
+import { ref, computed, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
+// Icon imports
+import menu from "../assets/icons/menu.svg";
+import users from "../assets/icons/users.svg";
+import cards from "../assets/icons/cards.svg";
+import logoutIcon from "../assets/icons/sign-out.png";
+import getchange from "../assets/icons/getchange.png";
+import arrowdown from "../assets/icons/arrow-down.png";
+import logoutIcon2 from "../assets/icons/log-out.png";
+import settings from "../assets/icons/settings.png";
+import timeIcon from "../assets/icons/time.png";
+
+const router = useRouter();
+const route = useRoute();
+
+// Reactive state
+const user = ref({
+  firstName: "",
+  lastName: "",
+  email: "",
+});
+const isDropdownVisible = ref(false);
+const showMainPage = ref(true);
+
+// Icons configuration
+const icons = [
+  { name: "menu", src: menu, route: "/dashboard" },
+  { name: "users", src: users, route: "/dashboard/employees" },
+  { name: "cards", src: cards, route: "/dashboard/cards" },
+];
+
+// Navigation items
+const items = [
+  { id: 1, title: "Profile", route: "/dashboard/settings/profile" },
+  { id: 2, title: "Password", route: "/dashboard/settings/password" },
+  {
+    id: 3,
+    title: "Store Information",
+    route: "/dashboard/settings/store-information",
+  },
+  {
+    id: 4,
+    title: "Billing Information",
+    route: "/dashboard/settings/billing-information",
+  },
+  {
+    id: 5,
+    title: "Invoice History",
+    route: "/dashboard/settings/invoice-history",
+  },
+];
+
+// Dropdown items
+const dropdowns = [
+  {
+    src: timeIcon,
+    label: "Wallet History",
+    route: "/dashboard/wallet-history",
+  },
+  { src: settings, label: "Settings", route: "/dashboard/settings/profile" },
+  { src: logoutIcon2, label: "Logout", route: "/" },
+];
+
+// Computed
+const activeRoute = computed(() => route.path);
+
+// Methods
+const logout = () => {
+  localStorage.removeItem("userData");
+  router.push("/");
+};
+
+const updateMainPageVisibility = (route) => {
+  if (route === "/dashboard/wallet-history") {
+    showMainPage.value = false;
+  } else {
+    showMainPage.value = true;
+  }
+};
+
+const toggleDropdown = () => {
+  isDropdownVisible.value = !isDropdownVisible.value;
+};
+
+// Watch route changes
+watch(
+  () => route.path,
+  (newRoute) => {
+    updateMainPageVisibility(newRoute);
+  }
+);
+
+// Lifecycle hook
+onMounted(() => {
+  const userData = localStorage.getItem("userData");
+  if (userData) {
+    user.value = JSON.parse(userData);
+  } else {
+    router.push("/");
+  }
+});
 </script>
 
 <template>

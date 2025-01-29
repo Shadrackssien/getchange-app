@@ -1,15 +1,6 @@
-<script>
+<script setup>
 import arrowLeft from "../../assets/icons/arrow-left.png";
 import arrowRight from "../../assets/icons/arrow-right.png";
-
-export default {
-  data() {
-    return {
-      arrowLeft,
-      arrowRight,
-    };
-  },
-};
 </script>
 <template>
   <div class="w-[60%] mx-auto mt-8">

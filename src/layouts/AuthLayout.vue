@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 export default {
   data() {
     return {
@@ -26,7 +26,34 @@ export default {
     },
   },
 };
+</script> -->
+
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+const selectedImage = ref("banner1.png");
+const images = ref(["banner1.png", "banner2.png"]);
+const intervalId = ref(null);
+
+const startImageSlider = () => {
+  intervalId.value = setInterval(() => {
+    const currentIndex = images.value.indexOf(selectedImage.value);
+    const nextIndex = (currentIndex + 1) % images.value.length;
+    selectedImage.value = images.value[nextIndex];
+  }, 5000);
+};
+const stopImageSlider = () => {
+  clearInterval(intervalId.value);
+};
+
+onMounted(() => {
+  startImageSlider();
+});
+onBeforeUnmount(() => {
+  stopImageSlider();
+});
 </script>
+
 <template>
   <div class="flex w-screen h-screen">
     <!-- Left Section -->

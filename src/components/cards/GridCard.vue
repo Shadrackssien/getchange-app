@@ -1,5 +1,6 @@
-<script>
+<!-- <script>
 import { ArrowRightUpIcon } from "../../components/icons/index.js";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -11,12 +12,69 @@ export default {
       required: true,
     },
   },
+  computed: {
+    ...mapGetters("product", ["isInCart", "getItemQuantity"]),
+    productInCart() {
+      return this.isInCart(this.product?.id);
+    },
+    quantity() {
+      return this.getItemQuantity(this.product?.id);
+    },
+  },
+  methods: {
+    updateQuantity(newQuantity) {
+      this.$store.commit("product/updateQuantity", {
+        productId: this.product.id,
+        quantity: newQuantity,
+      });
+    },
+    addToCart() {
+      this.$store.commit("product/addToCart", this.product);
+    },
+  },
+};
+</script> -->
+
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+//  props
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true,
+  },
+});
+
+//  store
+const store = useStore();
+
+// Computed
+const productInCart = computed(() => {
+  return store.getters["product/isInCart"](props.product?.id);
+});
+
+const quantity = computed(() => {
+  return store.getters["product/getItemQuantity"](props.product?.id);
+});
+
+// Methods
+const updateQuantity = (newQuantity) => {
+  store.commit("product/updateQuantity", {
+    productId: props.product.id,
+    quantity: newQuantity,
+  });
+};
+
+const addToCart = () => {
+  store.commit("product/addToCart", props.product);
 };
 </script>
 
 <template>
   <div
-    class="overflow-hidden mx-auto border border-1-[#E0E0E0] rounded-lg bg-white flex flex-col gap-4 w-96 md:w-full h-[488px] shadow-lg text-black no-underline"
+    class="overflow-hidden mx-auto border border-1-[#E0E0E0] rounded-lg bg-white flex flex-col gap-4 w-96 md:w-full h-[450px] shadow-lg text-black no-underline"
   >
     <img
       class="w-auto h-1/2 object-cover object-center rounded-t-lg transition-all duration-300 ease-in-out hover:scale-[1.02]"
@@ -32,12 +90,12 @@ export default {
       {{ product.price }}
     </div>
     <div
-      class="mx-4 mb-3 text-[14px] font-normal leading-[16.41px] text-ellipsis line-clamp-4 overflow-hidden"
+      class="mx-4 mb-3 text-[14px] font-normal leading-[16.41px] text-ellipsis line-clamp-3 overflow-hidden"
     >
       {{ product.description }}
     </div>
-    <div class="flex space-x-4">
-      <div class="mx-4 flex flex-row items-center gap-1 mb-3">
+    <div class="flex flex-col space-x-4">
+      <div class="mx-4 flex flex-row items-center justify-center gap-1 mb-3">
         <router-link
           class="text-primary text-[14px] leading-[16.41px] font-semibold"
           :to="product.link"
@@ -56,8 +114,31 @@ export default {
           />
         </svg>
       </div>
+
+      <!-- Quantity controls when in cart -->
+      <div
+        v-if="productInCart"
+        class="flex items-center justify-center gap-2 w-full"
+      >
+        <button
+          @click="updateQuantity(quantity - 1)"
+          class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600"
+        >
+          -
+        </button>
+        <span class="w-8 text-center text-gray-700">{{ quantity }}</span>
+        <button
+          @click="updateQuantity(quantity + 1)"
+          class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600"
+        >
+          +
+        </button>
+      </div>
+
+      <!-- Add to Cart button when not in cart -->
       <button
-        @click="$emit('addToCart', product)"
+        v-else
+        @click="addToCart"
         class="bg-[#2BDA53] w-full py-2 text-white rounded-lg"
       >
         Add to Cart

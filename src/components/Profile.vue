@@ -1,4 +1,3 @@
-<script></script>
 <template>
   <div class="flex gap-12">
     <div

@@ -1,7 +1,8 @@
-<script>
+<!-- <script>
 import GridCard from "../components/cards/GridCard.vue";
 import ListCard from "../components/cards/ListCard.vue";
-import axios from "axios";
+
+import { mapState, mapGetters, mapActions } from "vuex";
 
 import {
   ListIcon,
@@ -19,62 +20,82 @@ export default {
     ListCard,
     GridCard,
   },
-  data() {
-    return {
-      isListView: true,
-      currentPage: 1,
-      itemsPerPage: 5,
-      products: [],
-      selectedProducts: [],
-    };
-  },
+
   computed: {
-    totalPages() {
-      return Math.ceil(this.products.length / this.itemsPerPage);
-    },
-    displayedProducts() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.products.slice(start, end);
-    },
+    ...mapState("product", [
+      "isListView",
+      "selectedProducts",
+      "itemsPerPage",
+      "currentPage",
+    ]),
+    ...mapGetters("product", ["totalPages", "displayedProducts"]),
   },
   methods: {
+    ...mapActions("product", [
+      "fetchProducts",
+      "goToNextPage",
+      "goToPreviousPage",
+    ]),
     toggleView(view) {
-      this.isListView = view === "list";
+      this.$store.commit("product/toggleView", view);
     },
     addToCart(product) {
-      if (this.selectedProducts.includes(product)) {
-        this.selectedProducts = this.selectedProducts.filter(
-          (p) => p !== product
-        );
-      } else {
-        this.selectedProducts.push(product);
-      }
-    },
-    goToNextPage() {
-      if (this.currentPage < this.totalPages) this.currentPage++;
-    },
-    goToPreviousPage() {
-      if (this.currentPage > 1) this.currentPage--;
+      this.$store.commit("product/addToCart", product);
     },
   },
-  async mounted() {
-    try {
-      const res = await axios.get("https://fakestoreapi.com/products");
-      this.products = await res.data.map((product) => ({
-        imageSrc: product.image,
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        category: product.category,
-        link: "product/" + product.id,
-      }));
-      console.log(this.products);
-    } catch (error) {
-      console.log(error);
-    }
+  mounted() {
+    this.fetchProducts();
   },
 };
+</script> -->
+
+<script setup>
+import { computed, onMounted } from "vue";
+import GridCard from "../components/cards/GridCard.vue";
+import ListCard from "../components/cards/ListCard.vue";
+import { useStore } from "vuex";
+
+import {
+  ListIcon,
+  GridIcon,
+  CartFullIcon,
+  CartEmptyIcon,
+} from "../components/icons/index.js";
+
+const store = useStore();
+
+const isListView = computed(() => store.state["product"].isListView);
+const itemsPerPage = computed(() => store.state["product"].itemsPerPage);
+const currentPage = computed(() => store.state["product"].currentPage);
+
+const totalPages = computed(() => store.getters["product/totalPages"]);
+const displayedProducts = computed(
+  () => store.getters["product/displayedProducts"]
+);
+
+const fetchProducts = () => {
+  store.dispatch("product/fetchProducts");
+};
+
+const goToNextPage = () => {
+  store.dispatch("product/goToNextPage");
+};
+
+const goToPreviousPage = () => {
+  store.dispatch("product/goToPreviousPage");
+};
+
+const toggleView = (view) => {
+  store.commit("product/toggleView", view);
+};
+
+const addToCart = (product) => {
+  store.commit("product/addToCart", product);
+};
+
+onMounted(() => {
+  fetchProducts();
+});
 </script>
 
 <template>
@@ -85,7 +106,9 @@ export default {
         ~ Affordable prices you can get ~
       </p>
     </div>
-    <div class="flex justify-between items-center px-8 bg-slate-100 shadow-lg">
+    <div
+      class="flex justify-between items-center px-8 py-4 bg-slate-100 shadow-lg"
+    >
       <!-- List and Grid View Icons -->
       <div class="flex gap-2">
         <button
@@ -112,23 +135,6 @@ export default {
           <p class="text-lg">Grid View</p>
         </button>
       </div>
-
-      <!-- Cart Icon -->
-      <div>
-        <div
-          class="relative flex items-center cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out"
-        >
-          <button class="w-10 h-10 mt-2 text-green-800">
-            <cart-empty-icon />
-          </button>
-          <p
-            v-if="selectedProducts.length"
-            class="absolute inset-0 text-sm font-bold text-red-600 pl-5"
-          >
-            {{ selectedProducts.length }}
-          </p>
-        </div>
-      </div>
     </div>
 
     <!-- Dropdown for Items Per Page -->
@@ -139,7 +145,10 @@ export default {
         >
         <select
           id="itemsPerPage"
-          v-model="itemsPerPage"
+          :value="itemsPerPage"
+          @change="
+            $store.commit('product/setItemsPerPage', $event.target.value)
+          "
           class="border rounded-lg px-4 py-2"
         >
           <option :value="5">5</option>
@@ -167,6 +176,9 @@ export default {
         </div>
 
         <!-- Products -->
+        <div v-if="!displayedProducts.length">
+          <p>Loading products...</p>
+        </div>
         <div class="space-y-4">
           <ListCard
             v-for="product in displayedProducts"
@@ -201,6 +213,9 @@ export default {
       </div>
       <!-- Next and previous -->
       <div class="flex justify-end space-x-4 mt-4">
+        <span class="text-sm mt-4">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
         <button
           @click="goToPreviousPage"
           :disabled="currentPage === 1"

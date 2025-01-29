@@ -1,22 +1,14 @@
-<script>
+<script setup>
+import { ref } from "vue";
+
 import naira from "../assets/icons/naira.png";
 import arrowLeft from "../assets/icons/arrow-left.png";
 import arrowRight from "../assets/icons/arrow-right.png";
 
-export default {
-  data() {
-    return {
-      naira,
-      arrowLeft,
-      arrowRight,
-      showModal: false,
-    };
-  },
-  methods: {
-    toggleModal() {
-      this.showModal = !this.showModal;
-    },
-  },
+const showModal = ref(false);
+
+const toggleModal = () => {
+  showModal.value = !showModal.value;
 };
 </script>
 

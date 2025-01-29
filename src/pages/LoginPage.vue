@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import userIcon from "../assets/icons/user.png";
 import atIcon from "../assets/icons/at.png";
 import eyeIcon from "../assets/icons/eye.png";
@@ -40,7 +40,42 @@ export default {
     },
   },
 };
+</script> -->
+
+<script setup>
+import userIcon from "../assets/icons/user.png";
+import atIcon from "../assets/icons/at.png";
+import eyeIcon from "../assets/icons/eye.png";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+
+const router = useRouter();
+
+const formData = ref({
+  username: "",
+  password: "",
+  passwordConfirm: "",
+});
+
+const errorMessage = ref("");
+
+const handleLogin = () => {
+  if (
+    !formData.value.username ||
+    !formData.value.email ||
+    !formData.value.password
+  ) {
+    errorMessage.value = "Please fill in all fields.";
+    return;
+  }
+  errorMessage.value = "";
+
+  localStorage.setItem("userData", JSON.stringify(formData.value));
+
+  router.push("/dashboard");
+};
 </script>
+
 <template>
   <div>
     <div class="space-y-2">

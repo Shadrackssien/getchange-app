@@ -1,17 +1,7 @@
-<script>
+<script setup>
 import officeIcon from "../assets/icons/office.png";
 import mapIcon from "../assets/icons/map.png";
 import phoneIcon from "../assets/icons/phone.png";
-
-export default {
-  data() {
-    return {
-      officeIcon,
-      mapIcon,
-      phoneIcon,
-    };
-  },
-};
 </script>
 <template>
   <div class="space-y-6 text-secondary">

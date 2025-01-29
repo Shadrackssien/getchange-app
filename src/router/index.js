@@ -11,6 +11,8 @@ import Password from "../pages/settings/Password.vue";
 import StoreInformation from "../pages/settings/StoreInformation.vue";
 import BillingInformation from "../pages/settings/BillingInformation.vue";
 import InvoiceHistory from "../pages/settings/InvoiceHistory.vue";
+import SingleProductPage from "../pages/SingleProductPage.vue";
+import CartPage from "../pages/CartPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -86,6 +88,18 @@ const router = createRouter({
       name: "invoice",
       component: InvoiceHistory,
       meta: { layout: "ProfileLayout" },
+    },
+    {
+      path: "/dashboard/product/:id",
+      name: "product",
+      component: SingleProductPage,
+      meta: { layout: "DashboardLayout" },
+    },
+    {
+      path: "/dashboard/product/cart",
+      name: "cart",
+      component: CartPage,
+      meta: { layout: "DashboardLayout" },
     },
   ],
 });

@@ -1,6 +1,3 @@
-<script>
-export default {};
-</script>
 <template>
   <div class="space-y-8 w-[50%] mx-auto mt-16 text-secondary">
     <div class="space-y-1">

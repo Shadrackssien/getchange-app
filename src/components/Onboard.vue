@@ -1,17 +1,5 @@
-<script>
+<script setup>
 import arrowIcon from "../assets/icons/arrow.png";
-import { RouterLink } from "vue-router";
-
-export default {
-  components: {
-    RouterLink,
-  },
-  data() {
-    return {
-      arrowIcon,
-    };
-  },
-};
 </script>
 <template>
   <div class="space-y-8 flex flex-col items-center justify-center text-center">

@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import Delete from "../assets/icons/delete.png";
 
 export default {
@@ -21,6 +21,24 @@ export default {
     },
   },
 };
+</script> -->
+<script setup>
+import { ref, watch } from "vue";
+import Delete from "../assets/icons/delete.png";
+
+const amount = ref("");
+const calculator = ref("");
+const selectedOption = ref("Airtime");
+
+const options = ["Airtime", "IOU Voucher"];
+
+watch(amount, (newValue) => {
+  amount.value = newValue.replace(/[^0-9]/g, "");
+});
+
+watch(calculator, (newValue) => {
+  calculator.value = newValue.replace(/[^0-9]/g, "");
+});
 </script>
 <template>
   <div class="w-full space-y-4 bg-[#013C61] p-4 rounded-md">

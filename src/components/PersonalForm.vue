@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import BusinessForm from "./BusinessForm.vue";
 import Onboard from "./Onboard.vue";
 
@@ -6,29 +6,14 @@ import userIcon from "../assets/icons/user.png";
 import atIcon from "../assets/icons/at.png";
 import eyeIcon from "../assets/icons/eye.png";
 
-import { RouterLink } from "vue-router";
+import { ref } from "vue";
 
-export default {
-  components: {
-    BusinessForm,
-    Onboard,
-    RouterLink,
-  },
-  data() {
-    return {
-      userIcon,
-      atIcon,
-      eyeIcon,
-      currentStep: 1,
-    };
-  },
-  methods: {
-    nextStep() {
-      if (this.currentStep < 3) {
-        this.currentStep++;
-      }
-    },
-  },
+const currentStep = ref(1);
+
+const nextStep = () => {
+  if (currentStep.value < 3) {
+    currentStep.value++;
+  }
 };
 </script>
 <template>

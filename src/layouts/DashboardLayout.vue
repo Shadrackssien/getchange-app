@@ -1,7 +1,4 @@
-<script>
-// import menu from "../assets/icons/menu.svg";
-// import users from "../assets/icons/users.svg";
-// import cards from "../assets/icons/cards.svg";
+<!-- <script>
 import logoutIcon from "../assets/icons/sign-out.png";
 
 import GetchangeWidget from "../components/GetchangeWidget.vue";
@@ -19,13 +16,13 @@ export default {
   data() {
     return {
       icons: [
-        { name: "home", component: HomeIcon, route: "/dashboard" },
+        { name: "home", component: "HomeIcon", route: "/dashboard" },
         {
           name: "employees",
-          component: ContactIcon,
+          component: "ContactIcon",
           route: "/dashboard/employees",
         },
-        { name: "cards", component: CardIcon, route: "/dashboard/cards" },
+        { name: "cards", component: "CardIcon", route: "/dashboard/cards" },
       ],
 
       logoutIcon,
@@ -70,6 +67,72 @@ export default {
     },
   },
 };
+</script> -->
+
+<script setup>
+import { ref, computed, watch, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import logoutIcon from "../assets/icons/sign-out.png";
+
+import GetchangeWidget from "../components/GetchangeWidget.vue";
+import { HomeIcon, ContactIcon, CardIcon } from "../components/icons/index.js";
+import Navbar from "../components/Navbar.vue";
+
+const router = useRouter();
+const route = useRoute();
+
+// Reactive state
+const user = ref(null);
+const showGetchangeWidget = ref(true);
+
+// Icons configuration
+const icons = [
+  { name: "home", component: HomeIcon, route: "/dashboard" },
+  {
+    name: "employees",
+    component: ContactIcon,
+    route: "/dashboard/employees",
+  },
+  { name: "cards", component: CardIcon, route: "/dashboard/cards" },
+];
+
+// Computed
+const activeRoute = computed(() => route.path);
+
+// Methods
+const goToRoute = (route) => {
+  router.push(route);
+};
+
+const logout = () => {
+  localStorage.removeItem("userData");
+  router.push("/");
+};
+
+const updateWidgetVisibility = (route) => {
+  if (route === "/dashboard/cards" || route === "/dashboard/employees") {
+    showGetchangeWidget.value = false;
+  } else {
+    showGetchangeWidget.value = true;
+  }
+};
+
+// Watch route changes
+watch(
+  () => route.path,
+  (newRoute) => {
+    updateWidgetVisibility(newRoute);
+  }
+);
+
+onMounted(() => {
+  const userData = localStorage.getItem("userData");
+  if (userData) {
+    user.value = JSON.parse(userData);
+  } else {
+    router.push("/");
+  }
+});
 </script>
 
 <template>

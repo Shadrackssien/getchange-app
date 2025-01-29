@@ -1,4 +1,3 @@
-<script></script>
 <template>
   <form class="w-[50%] mx-auto mt-16">
     <div class="space-y-10">
