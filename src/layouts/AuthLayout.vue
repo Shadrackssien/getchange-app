@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
     <!-- Left Section -->
     <div class="w-2/5 relative">
       <img
-        :src="`/src/assets/${selectedImage}`"
+        :src="`/images/${selectedImage}`"
         class="w-full h-full object-cover"
         alt="banner image"
       />
