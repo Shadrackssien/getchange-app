@@ -1,33 +1,3 @@
-<!-- <script>
-export default {
-  data() {
-    return {
-      selectedImage: "banner1.png",
-      images: ["banner1.png", "banner2.png"],
-      intervalId: null,
-    };
-  },
-  mounted() {
-    this.startImageSlider();
-  },
-  beforeUnmount() {
-    this.stopImageSlider();
-  },
-  methods: {
-    startImageSlider() {
-      this.intervalId = setInterval(() => {
-        const currentIndex = this.images.indexOf(this.selectedImage);
-        const nextIndex = (currentIndex + 1) % this.images.length;
-        this.selectedImage = this.images[nextIndex];
-      }, 5000);
-    },
-    stopImageSlider() {
-      clearInterval(this.intervalId);
-    },
-  },
-};
-</script> -->
-
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
@@ -59,7 +29,7 @@ onBeforeUnmount(() => {
     <!-- Left Section -->
     <div class="w-2/5 relative">
       <img
-        :src="`/public/images/${selectedImage}`"
+        :src="`/src/assets/${selectedImage}`"
         class="w-full h-full object-cover"
         alt="banner image"
       />
