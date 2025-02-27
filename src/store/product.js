@@ -25,7 +25,9 @@ const productStore = {
       state.isListView = view === "list";
     },
     addToCart(state, product) {
-      const existingProduct = state.selectedProducts.find(p => p.product.id === product.id);
+      const existingProduct = state.selectedProducts.find(
+        (p) => p.product.id === product.id
+      );
       if (existingProduct) {
         state.selectedProducts = state.selectedProducts.filter(
           (p) => p !== product
@@ -40,14 +42,14 @@ const productStore = {
     updateQuantity(state, { productId, quantity }) {
       if (quantity <= 0) {
         state.selectedProducts = state.selectedProducts.filter(
-          item => item.product.id !== productId
+          (item) => item.product.id !== productId
         );
-      }else {
+      } else {
         const productInCart = state.selectedProducts.find(
-          item => item.product.id === productId
+          (item) => item.product.id === productId
         );
         if (productInCart) {
-          productInCart.quantity = quantity; 
+          productInCart.quantity = quantity;
         }
       }
     },
@@ -76,7 +78,6 @@ const productStore = {
     previousPage(state) {
       state.currentPage--;
     },
-    
   },
   actions: {
     async fetchProducts({ commit }) {
@@ -110,7 +111,7 @@ const productStore = {
       }
     },
     goToNextPage({ commit, state, getters }) {
-      if (state.currentPage < getters.totalPages) {++
+      if (state.currentPage < getters.totalPages) {
         commit("nextPage", state.currentPage + 1);
       }
     },
@@ -134,29 +135,38 @@ const productStore = {
     isLoading: (state) => state.isLoading,
 
     cartItems: (state) => state.selectedProducts,
-    
+
     cartTotal: (state) => {
       return state.selectedProducts.reduce((total, item) => {
-        return total + (item.product.price * item.quantity);
+        return total + item.product.price * item.quantity;
       }, 0);
     },
 
     cartItemCount: (state) => {
-      return state.selectedProducts.reduce((total, item) => total + item.quantity, 0);
+      return state.selectedProducts.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
     },
 
     isInCart: (state) => (productId) => {
-      return state.selectedProducts.some(item => item.product.id === productId);
+      return state.selectedProducts.some(
+        (item) => item.product.id === productId
+      );
     },
 
     getCartItem: (state) => (productId) => {
-      return state.selectedProducts.find(item => item.product.id === productId);
+      return state.selectedProducts.find(
+        (item) => item.product.id === productId
+      );
     },
 
     getItemQuantity: (state) => (productId) => {
-      const item = state.selectedProducts.find(item => item.product.id === productId);
+      const item = state.selectedProducts.find(
+        (item) => item.product.id === productId
+      );
       return item ? item.quantity : 0;
-    }
+    },
   },
 };
 
