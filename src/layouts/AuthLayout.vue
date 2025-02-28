@@ -1,14 +1,21 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import banner1 from "../assets/banner1.png";
+import banner2 from "../assets/banner2.png";
 
-const selectedImage = ref("banner1.png");
-const images = ref(["banner1.png", "banner2.png"]);
-const intervalId = ref(null);
+// Store the imported images directly
+const selectedImage = ref(banner1);
+const images = ref([banner1, banner2]);
+
+// For the buttons, we need names to match against
+const imageNames = ref(["banner1.png", "banner2.png"]);
+const selectedImageName = ref(imageNames.value[0]);
 
 const startImageSlider = () => {
   intervalId.value = setInterval(() => {
-    const currentIndex = images.value.indexOf(selectedImage.value);
-    const nextIndex = (currentIndex + 1) % images.value.length;
+    const currentIndex = imageNames.value.indexOf(selectedImageName.value);
+    const nextIndex = (currentIndex + 1) % imageNames.value.length;
+    selectedImageName.value = imageNames.value[nextIndex];
     selectedImage.value = images.value[nextIndex];
   }, 5000);
 };
@@ -29,7 +36,7 @@ onBeforeUnmount(() => {
     <!-- Left Section -->
     <div class="w-2/5 relative">
       <img
-        :src="`/images/${selectedImage}`"
+        :src="selectedImage"
         class="w-full h-full object-cover"
         alt="banner image"
       />
