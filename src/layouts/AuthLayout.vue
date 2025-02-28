@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
       <img
         :src="selectedImage"
         class="w-full h-full object-cover"
-        alt="banner image"
+        alt="banner"
       />
       <div class="absolute inset-0 z-20">
         <div
